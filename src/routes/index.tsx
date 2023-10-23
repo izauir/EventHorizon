@@ -9,7 +9,7 @@ export default function Routes() {
   return (
     <NavigationContainer>
       <StatusBar backgroundColor="#000000" barStyle="light-content" />
-      <TabRoutes />
+      <StackRoutes />
     </NavigationContainer>
   );
 }
