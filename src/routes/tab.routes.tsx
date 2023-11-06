@@ -28,30 +28,33 @@ export default function TabRoutes() {
       }}
     >
       <Tab.Screen
-        name="Início"
+        name="home"
         component={Home}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name="home" color={color} size={size} />
           ),
+          tabBarLabel: "Início",
         }}
       />
       <Tab.Screen
-        name="Buscar"
+        name="search"
         component={Search}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="search" color={color} size={size} />
           ),
+          tabBarLabel: "Buscar",
         }}
       />
       <Tab.Screen
-        name="Meu perfil"
+        name="myprofile"
         component={MyProfile}
         options={{
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="user" color={color} size={size} />
           ),
+          tabBarLabel: "Meu Perfil",
         }}
       />
     </Tab.Navigator>
