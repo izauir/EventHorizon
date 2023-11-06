@@ -1,16 +1,14 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import {
-  Text,
-  View,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import styles from "./styles";
+import { type StackNavigation } from "../../routes/stack.routes";
 
-export default function Search() {
+export default function Welcome() {
+  const navigation = useNavigation<StackNavigation>();
+
   return (
     <ImageBackground
       source={require("../../assets/background.jpg")}
@@ -21,7 +19,7 @@ export default function Search() {
           <Animatable.Image
             animation="flipInY"
             source={require("../../assets/logo.png")}
-            style={{ width: "100%" }}
+            style={{ width: 300, height: 200 }}
             resizeMode="contain"
           />
         </View>
@@ -31,10 +29,13 @@ export default function Search() {
           animation="fadeInUp"
           style={styles.containerForm}
         >
-          <Text style={styles.title}>Sua melhor experiência!</Text>
+          <Text style={styles.title}>Descubra eventos</Text>
           <Text style={styles.text}>Faça o login para começar</Text>
 
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("login")}
+            style={styles.button}
+          >
             <Text style={styles.buttonText}>Acessar</Text>
           </TouchableOpacity>
         </Animatable.View>

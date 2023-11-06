@@ -28,9 +28,9 @@ export default StyleSheet.create({
   button: {
     position: "absolute",
     backgroundColor: "#4F46E5",
-    borderRadius: 50,
+    borderRadius: 5,
     paddingVertical: 8,
-    width: "60%",
+    width: "80%",
     alignSelf: "center",
     bottom: "15%",
     alignItems: "center",
@@ -38,7 +38,7 @@ export default StyleSheet.create({
   },
   buttonText: {
     color: "#FFF",
-    fontSize: 17,
+    fontSize: 16,
   },
   // Feito para estilizar o background das páginas
   background: {
