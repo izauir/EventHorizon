@@ -29,7 +29,9 @@ export default function Welcome() {
           animation="fadeInUp"
           style={styles.containerForm}
         >
-          <Text style={styles.title}>Descubra eventos</Text>
+          <Text style={styles.title}>
+            Alimentando sua imaginação, transformando festas em realidade.
+          </Text>
           <Text style={styles.text}>Faça o login para começar</Text>
 
           <TouchableOpacity

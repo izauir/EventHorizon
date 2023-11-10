@@ -10,7 +10,7 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   containerForm: {
-    flex: 0.8,
+    flex: 0.9,
     backgroundColor: "#FFF",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
