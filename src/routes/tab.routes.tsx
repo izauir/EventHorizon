@@ -31,7 +31,7 @@ export default function TabRoutes() {
         name="home"
         component={Home}
         options={{
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" color={color} size={size} />
           ),
           tabBarLabel: "Início",
