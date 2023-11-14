@@ -34,7 +34,6 @@ export default function Login() {
         {/* Input de Login e Senha */}
         <Animatable.View animation="fadeInUp" style={styles.containerForm}>
           <Text style={styles.messageLoginSenha}>
-            {" "}
             <AntDesign name="user" size={20} color="black" /> Usuário
           </Text>
           <TextInput
@@ -45,9 +44,7 @@ export default function Login() {
 
         <Animatable.View animation="fadeInUp" style={styles.containerForm}>
           <Text style={styles.messageLoginSenha}>
-            {" "}
-            <Ionicons name="key" size={20} color="black" />
-            {" Senha"}
+            <Ionicons name="key" size={20} color="black" /> Senha
           </Text>
           <TextInput
             placeholder="Digite sua senha"

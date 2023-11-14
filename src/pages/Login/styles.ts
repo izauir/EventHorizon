@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   messageHeader: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "400",
   },
   // Estilo de login e senha
   containerForm: {
@@ -25,7 +25,7 @@ export default StyleSheet.create({
     marginTop: 28,
   },
   inputLoginSenha: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.8,
     height: 40,
     fontSize: 16,
   },
