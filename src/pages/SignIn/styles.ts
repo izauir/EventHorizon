@@ -31,7 +31,7 @@ export default StyleSheet.create({
   },
   eyeIconContainer: {
     position: "absolute",
-    marginLeft: 340,
+    marginLeft: 290,
     marginTop: 60,
   },
   buttonCadastrar: {
