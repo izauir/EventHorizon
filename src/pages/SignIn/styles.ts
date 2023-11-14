@@ -13,7 +13,7 @@ export default StyleSheet.create({
   },
   messageHeader: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontWeight: "400",
   },
   // Estilo de login e senha
   containerForm: {
@@ -25,9 +25,14 @@ export default StyleSheet.create({
     marginTop: 28,
   },
   inputLoginSenha: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.8,
     height: 40,
     fontSize: 16,
+  },
+  eyeIconContainer: {
+    position: "absolute",
+    marginLeft: 340,
+    marginTop: 60,
   },
   buttonCadastrar: {
     backgroundColor: "#4F46E5",
@@ -43,5 +48,10 @@ export default StyleSheet.create({
   buttonCadastroText: {
     fontSize: 16,
     color: "#FFF",
+  },
+  errorMessage: {
+    fontSize: 14,
+    marginTop: 10,
+    color: "red",
   },
 });

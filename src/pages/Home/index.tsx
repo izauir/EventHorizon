@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Text, ImageBackground } from "react-native";
 import * as Animatable from "react-native-animatable";
 
@@ -7,6 +8,23 @@ import SearchFilter from "../../components/SearchFilter";
 import welcomeStyles from "../Welcome/styles";
 
 export default function Home() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    // Função para fazer a chamada à API
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://pjpw.vercel.app/listar");
+        setData(response.data); // Atualiza o estado com os dados da API
+      } catch (error) {
+        console.error("Erro na chamada à API:", error);
+      }
+    };
+
+    // Chama a função de chamada à API
+    fetchData();
+  }, []); // O segundo argumento [] indica que este efeito colateral só deve ser executado uma vez (equivalente a componentDidMount)
+
   return (
     <ImageBackground
       source={require("../../assets/background.jpg")}
