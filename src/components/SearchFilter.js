@@ -2,7 +2,7 @@ import { EvilIcons } from "@expo/vector-icons";
 import React from "react";
 import { TextInput, View } from "react-native";
 
-const SearchFilter = ({ icon, placeholder }) => {
+const SearchFilter = ({ icon, placeholder, onChangeText }) => {
   return (
     <View
       style={{
@@ -20,6 +20,7 @@ const SearchFilter = ({ icon, placeholder }) => {
       <EvilIcons name={icon} size={30} color="black" />
       <TextInput
         placeholder={placeholder}
+        onChangeText={onChangeText}
         style={{ fontSize: 14, color: "#808080" }}
       />
     </View>

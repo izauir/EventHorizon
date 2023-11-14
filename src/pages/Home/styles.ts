@@ -8,4 +8,8 @@ export default StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
   },
+  informacoesApi: {
+    marginLeft: 10,
+    marginTop: 10,
+  },
 });
