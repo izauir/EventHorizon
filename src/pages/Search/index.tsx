@@ -31,7 +31,11 @@ export default function Search() {
 
       {/* Barra de busca */}
       <Animatable.View animation="fadeInUp" delay={350}>
-        <SearchFilter icon="search" placeholder=" Nome do evento ou artista" />
+        <SearchFilter
+          icon="search"
+          placeholder=" Nome do evento ou artista"
+          onChangeText={undefined}
+        />
       </Animatable.View>
 
       <Animatable.View animation="fadeInUp" delay={350}>
