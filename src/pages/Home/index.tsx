@@ -1,10 +1,18 @@
+import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Text, ImageBackground, View, ScrollView } from "react-native";
+import {
+  Text,
+  ImageBackground,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import styles from "./styles";
 import SearchFilter from "../../components/SearchFilter";
+import { StackNavigation } from "../../routes/stack.routes";
 import welcomeStyles from "../Welcome/styles";
 
 interface EventData {
@@ -20,6 +28,7 @@ export default function Home() {
   const [data, setData] = useState<EventData[]>([]);
   // O "a" é apenas para não deixar a váriavel vazia e quebrar o código.
   const [searchTerm, setSearchTerm] = useState<string>("a");
+  const navigation = useNavigation<StackNavigation>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +51,11 @@ export default function Home() {
     // Defina um valor padrão se o texto estiver vazio
     const term = text.trim() === "" ? "a" : text;
     setSearchTerm(term);
+  };
+
+  const handleContainerPress = () => {
+    // Navegar para a próxima tela ao clicar no container
+    navigation.navigate("card");
   };
 
   return (
@@ -70,16 +84,22 @@ export default function Home() {
         <Text style={[styles.text, { fontWeight: "400", fontSize: 20 }]}>
           Últimas atualizações:
         </Text>
-        <ScrollView>
+        {/* Dar o espaço para a tab navigation não cobrir as informações da API */}
+        <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
           {/* Renderize os dados conforme necessário */}
           {data.map((item) => (
-            <View style={styles.informacoesApi} key={item.id}>
-              <Text>{item.title}</Text>
-              <Text>{item.description}</Text>
-              <Text>{item.photo}</Text>
-              <Text>{item.datetime}</Text>
+            <TouchableOpacity
+              onPress={handleContainerPress}
+              style={styles.informacoesApi}
+              key={item.id}
+            >
+              {/* Renderizar a imagem */}
+              <Image source={{ uri: item.photo }} style={[styles.imageApi]} />
+              {/* Informações em texto da Api */}
+              <Text style={[styles.textApi]}> {item.title}</Text>
+              <Text style={[styles.textApi]}>Data: {item.datetime}</Text>
               {/* Adicione mais informações conforme sua API fornece */}
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </Animatable.View>

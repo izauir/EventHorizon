@@ -2,12 +2,19 @@ import { NavigationProp } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import TabRoutes from "./tab.routes";
+import Card from "../pages/Card";
 import Login from "../pages/Login";
 import SignIn from "../pages/SignIn";
 import Welcome from "../pages/Welcome";
 
 //Typagem para usar o useNavigation
-export type ScreenNames = ["welcome", "login", "signin", "tabrouteshome"];
+export type ScreenNames = [
+  "welcome",
+  "login",
+  "signin",
+  "tabrouteshome",
+  "card",
+];
 export type RootStackParamList = Record<ScreenNames[number], undefined>;
 export type StackNavigation = NavigationProp<RootStackParamList>;
 
@@ -19,6 +26,7 @@ export default function StackRoutes() {
       <Stack.Screen name="welcome" component={Welcome} />
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="signin" component={SignIn} />
+      <Stack.Screen name="card" component={Card} />
       <Stack.Screen name="tabrouteshome" component={TabRoutes} />
     </Stack.Navigator>
   );
