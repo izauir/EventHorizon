@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   ImageBackground,
@@ -30,22 +30,28 @@ export default function Home() {
   const [searchTerm] = useState<string>("a");
   const navigation = useNavigation<StackNavigation>();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<EventData[]>(
-          `https://pjpw.vercel.app/listar?filtro=${searchTerm}`,
-        );
-        setData(response.data);
-        console.log(response.data); // Adicione este console.log para verificar os dados recebidos
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-        // Lide com o erro, talvez exibindo uma mensagem para o usuário
-      }
-    };
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get<EventData[]>(
+            `https://pjpw.vercel.app/listar?filtro=${searchTerm}`,
+          );
+          setData(response.data);
+          console.log(response.data); // Adicione este console.log para verificar os dados recebidos
+        } catch (error) {
+          console.error("Erro ao buscar dados:", error);
+          // Lide com o erro, talvez exibindo uma mensagem para o usuário
+        }
+      };
 
-    fetchData();
-  }, [searchTerm]);
+      fetchData();
+
+      return () => {
+        // Limpar dados, se necessário, ao desfocar a tela
+      };
+    }, [searchTerm])
+  );
 
   const handleContainerPress = (eventData: EventData) => {
     // Navegar para a próxima tela enviando os dados do evento como parâmetros
