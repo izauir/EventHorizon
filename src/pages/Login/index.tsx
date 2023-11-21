@@ -1,12 +1,14 @@
 import { Ionicons, AntDesign } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   View,
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
@@ -16,6 +18,41 @@ import welcomeStyles from "../Welcome/styles";
 
 export default function Login() {
   const navigation = useNavigation<StackNavigation>();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    if (!username || !password) {
+      Alert.alert("Nome de usuário e senha são obrigatórios!");
+      return;
+    }
+
+    // Aqui você pode chamar sua API para verificar as credenciais
+    try {
+      const response = await fetch("https://pjpw.vercel.app/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      console.log("Resposta da API:", response);
+
+      if (response.status === 200) {
+        await AsyncStorage.setItem("username", username);
+        Alert.alert("Usuário autenticado com sucesso!");
+        navigation.navigate("tabrouteshome");
+      } else {
+        Alert.alert("Credencias inválidas!");
+      }
+    } catch (error) {
+      console.error("Erro ao conectar com a API:", error);
+    }
+  };
 
   return (
     <ImageBackground
@@ -39,6 +76,8 @@ export default function Login() {
           <TextInput
             placeholder="Digite o usuário"
             style={styles.inputLoginSenha}
+            onChangeText={setUsername}
+            value={username}
           />
         </Animatable.View>
 
@@ -49,15 +88,14 @@ export default function Login() {
           <TextInput
             placeholder="Digite sua senha"
             style={styles.inputLoginSenha}
+            onChangeText={setPassword}
+            value={password}
           />
         </Animatable.View>
 
         {/* Botão para entrar */}
         <Animatable.View animation="fadeInUp">
-          <TouchableOpacity
-            onPress={() => navigation.navigate("tabrouteshome")}
-            style={styles.buttonLogin}
-          >
+          <TouchableOpacity onPress={handleLogin} style={styles.buttonLogin}>
             <Text style={styles.buttonLoginText}>Entrar</Text>
           </TouchableOpacity>
         </Animatable.View>
@@ -67,9 +105,8 @@ export default function Login() {
             onPress={() => navigation.navigate("signin")}
             style={styles.buttonRegister}
           >
-            <Text style={styles.buttonRegisterText}>
-              Não possui uma conta? Cadastre-se!
-            </Text>
+            <Text style={styles.naoPossuiContaText}>Não possui uma conta?</Text>
+            <Text style={styles.buttonRegisterText}> Cadastre-se!</Text>
           </TouchableOpacity>
         </Animatable.View>
       </View>

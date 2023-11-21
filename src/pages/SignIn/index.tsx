@@ -1,5 +1,6 @@
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import axios, { AxiosError } from "axios";
 import React, { useState } from "react";
 import {
   Text,
@@ -8,12 +9,15 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
+  LogBox,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import styles from "./styles";
 import { type StackNavigation } from "../../routes/stack.routes";
 import welcomeStyles from "../Welcome/styles";
+
+LogBox.ignoreAllLogs(true); // Serve para esconder os blocos de erro em vermelho que aparece na tela.
 
 export default function SignIn() {
   const navigation = useNavigation<StackNavigation>();
@@ -53,7 +57,7 @@ export default function SignIn() {
     }
   };
 
-  const handleCadastro = () => {
+  const handleCadastro = async () => {
     // Realize as validações antes de navegar para a próxima tela
     validarEmail();
     validarUsuario();
@@ -71,20 +75,44 @@ export default function SignIn() {
       // Se algum campo não estiver preenchido, exibe uma mensagem ou toma outra ação
       Alert.alert("Preencha todos os campos corretamente.");
     } else {
-      // Aqui você pode armazenar os dados localmente
-      const userData = { email, usuario, senha };
-      console.log("Dados cadastrados:", userData);
+      try {
+        console.log("Enviando dados para a API:", {
+          username: usuario,
+          password: senha,
+        });
+        const response = await axios.post("https://pjpw.vercel.app/registro", {
+          username: usuario,
+          password: senha,
+        });
 
-      // Limpa os campos após o cadastro
-      setEmail("");
-      setUsuario("");
-      setSenha("");
-      setErrorEmail("");
-      setErrorUsuario("");
-      setErrorSenha("");
+        console.log("Resposta da API:", response.data);
 
-      Alert.alert("Cadastro realizado com sucesso!");
-      navigation.navigate("login");
+        if (response.data.message === "Usuário criado com sucesso!") {
+          // Limpa os campos após o cadastro
+          setEmail("");
+          setUsuario("");
+          setSenha("");
+          setErrorEmail("");
+          setErrorUsuario("");
+          setErrorSenha("");
+
+          Alert.alert("Cadastro realizado com sucesso!");
+          navigation.navigate("login");
+        } else {
+          // Trata outros tipos de respostas aqui
+          Alert.alert(response.data.message);
+        }
+      } catch (error) {
+        if (error && (error as AxiosError).response) {
+          const axiosError = error as AxiosError;
+          console.error("Erro ao fazer a solicitação para a API:", axiosError);
+          if (axiosError.response && axiosError.response.status === 400) {
+            Alert.alert("O usuário já existe.");
+          } else {
+            Alert.alert("Ocorreu um erro ao tentar cadastrar o usuário.");
+          }
+        }
+      }
     }
   };
 

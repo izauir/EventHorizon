@@ -8,6 +8,17 @@ export default StyleSheet.create({
     marginLeft: 10,
     marginTop: 10,
   },
+  inputText: {
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    borderRadius: 10,
+    paddingVertical: 10,
+    height: 50,
+    marginVertical: 16,
+    marginRight: 15,
+    marginLeft: 15,
+    // borderWidth: 1.5, // borda no TextInput
+  },
   textApi: {
     marginLeft: 10,
     marginTop: 10,
