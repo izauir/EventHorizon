@@ -1,5 +1,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import * as Network from "expo-network";
 import React, { useState } from "react";
 import {
   Text,
@@ -7,6 +8,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
@@ -33,6 +35,13 @@ export default function Home() {
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () => {
+        // Verifique a conectividade antes de fazer a chamada da API
+        const netInfo = await Network.getNetworkStateAsync();
+        if (!netInfo.isConnected) {
+          Alert.alert("Você não está conectado à internet!");
+          return;
+        }
+
         try {
           const response = await axios.get<EventData[]>(
             `https://pjpw.vercel.app/listar?filtro=${searchTerm}`,
@@ -50,7 +59,7 @@ export default function Home() {
       return () => {
         // Limpar dados, se necessário, ao desfocar a tela
       };
-    }, [searchTerm])
+    }, [searchTerm]),
   );
 
   const handleContainerPress = (eventData: EventData) => {

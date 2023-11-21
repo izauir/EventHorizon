@@ -28,7 +28,7 @@ export default function SignIn() {
   const [errorEmail, setErrorEmail] = useState("");
   const [errorUsuario, setErrorUsuario] = useState("");
   const [errorSenha, setErrorSenha] = useState("");
-  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [mostrarSenha, setMostrarSenha] = useState(true);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Novo estado
 
   const validarEmail = () => {
@@ -179,8 +179,8 @@ export default function SignIn() {
           >
             <Ionicons
               name={mostrarSenha ? "eye-off" : "eye"}
-              size={24}
-              color="#888"
+              size={22}
+              color="black"
             />
           </TouchableOpacity>
           {errorSenha && <Text style={styles.errorMessage}>{errorSenha}</Text>}

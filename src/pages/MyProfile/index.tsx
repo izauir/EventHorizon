@@ -1,12 +1,21 @@
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
-import { Text, View, ImageBackground, ScrollView, Image } from "react-native";
+import {
+  Text,
+  View,
+  ImageBackground,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 
 import styles from "./styles";
+import { StackNavigation } from "../../routes/stack.routes";
 import welcomeStyles from "../Welcome/styles";
 
 type Event = {
@@ -17,6 +26,7 @@ type Event = {
 };
 
 export default function MyProfile() {
+  const navigation = useNavigation<StackNavigation>();
   const [favoriteEvents, setFavoriteEvents] = useState<Event[]>([]);
 
   useFocusEffect(
@@ -54,6 +64,43 @@ export default function MyProfile() {
       };
     }, []),
   );
+
+  const navigateToFavoriteCard = (eventId: number) => {
+    const favoriteEvent = favoriteEvents.find((event) => event.id === eventId);
+
+    if (favoriteEvent) {
+      navigation.navigate("card", { eventData: favoriteEvent });
+    }
+  };
+
+  const handleLogout = () => {
+    Alert.alert(
+      "Sair",
+      "Tem certeza que deseja sair?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancelado"),
+          style: "cancel",
+        },
+        {
+          text: "Sair",
+          onPress: async () => {
+            try {
+              // Lógica de logout
+              await AsyncStorage.removeItem("username");
+              // Redirecionamento para a tela de login (substitua 'login' pelo nome da sua rota de login)
+              navigation.navigate("login");
+            } catch (error) {
+              console.error(error);
+              // Trate qualquer erro que possa ocorrer durante o logout
+            }
+          },
+        },
+      ],
+      { cancelable: false },
+    );
+  };
 
   return (
     <ImageBackground
@@ -97,24 +144,50 @@ export default function MyProfile() {
             </Text>
           </Animatable.View>
 
-          <View style={{ marginTop: 32 }}>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {favoriteEvents.map((event: Event) => (
-                <Animatable.View
-                  key={event.id}
-                  animation="fadeInUp"
-                  delay={350}
-                  style={styles.mediaImageContainer}
-                >
-                  <Image
-                    source={{ uri: event.photo }}
-                    style={styles.image}
-                    resizeMode="cover"
-                  />
-                </Animatable.View>
-              ))}
-            </ScrollView>
-          </View>
+          <Animatable.View
+            animation="fadeInLeft"
+            delay={700}
+            style={{ marginTop: 32 }}
+          >
+            {favoriteEvents.length === 0 ? (
+              <Text
+                style={{
+                  color: "black",
+                  textAlign: "center",
+                  fontSize: 18,
+                }}
+              >
+                Você ainda não possui eventos favoritados.
+              </Text>
+            ) : (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {favoriteEvents.map((event: Event) => (
+                  <TouchableOpacity
+                    key={event.id}
+                    onPress={() => navigateToFavoriteCard(event.id)}
+                  >
+                    <Animatable.View
+                      animation="fadeInUp"
+                      delay={350}
+                      style={styles.mediaImageContainer}
+                    >
+                      <Image
+                        source={{ uri: event.photo }}
+                        style={styles.image}
+                        resizeMode="cover"
+                      />
+                    </Animatable.View>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            )}
+            <TouchableOpacity
+              onPress={handleLogout}
+              style={styles.logoutButton}
+            >
+              <Text style={styles.logoutText}>Deslogar</Text>
+            </TouchableOpacity>
+          </Animatable.View>
         </ScrollView>
       </View>
     </ImageBackground>

@@ -58,4 +58,18 @@ export default StyleSheet.create({
     overflow: "hidden",
     marginHorizontal: 10,
   },
+  logoutButton: {
+    backgroundColor: "#4F46E5",
+    borderRadius: 5,
+    paddingVertical: 8,
+    width: "30%",
+    bottom: "15%",
+    alignItems: "center",
+    marginTop: 80,
+    alignSelf: "center",
+  },
+  logoutText: {
+    fontSize: 17,
+    color: "#FFF",
+  },
 });

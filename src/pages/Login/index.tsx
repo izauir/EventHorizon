@@ -1,6 +1,7 @@
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import * as Network from "expo-network";
 import React, { useState } from "react";
 import {
   Text,
@@ -21,6 +22,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Novo estado
+  const [hidePassword, setHidePassword] = useState(true); // Novo estado para controlar a visibilidade da senha
 
   const handleLogin = async () => {
     setIsButtonDisabled(true); // Desativa o botão
@@ -28,6 +30,13 @@ export default function Login() {
 
     if (!username || !password) {
       Alert.alert("Nome de usuário e senha são obrigatórios!");
+      return;
+    }
+
+    // Verifique a conectividade antes de fazer a chamada da API
+    const netInfo = await Network.getNetworkStateAsync();
+    if (!netInfo.isConnected) {
+      Alert.alert("Você não está conectado à internet!");
       return;
     }
 
@@ -56,6 +65,10 @@ export default function Login() {
     } catch (error) {
       console.error("Erro ao conectar com a API:", error);
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setHidePassword(!hidePassword); // Alterna a visibilidade da senha
   };
 
   return (
@@ -94,7 +107,16 @@ export default function Login() {
             style={styles.inputLoginSenha}
             onChangeText={setPassword}
             value={password}
+            secureTextEntry={hidePassword} // Usa secureTextEntry para ocultar a senha
           />
+          <TouchableOpacity onPress={togglePasswordVisibility}>
+            <Ionicons
+              name={hidePassword ? "eye-off" : "eye"}
+              size={22}
+              color="black"
+              style={styles.eyeIconContainer}
+            />
+          </TouchableOpacity>
         </Animatable.View>
 
         {/* Botão para entrar */}
