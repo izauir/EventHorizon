@@ -1,8 +1,20 @@
 import { EvilIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { FC } from "react";
 import { TextInput, View } from "react-native";
 
-const SearchFilter = ({ icon, placeholder, onChangeText }) => {
+type IconNames = "search";
+
+interface SearchFilterProps {
+  icon: IconNames;
+  placeholder: string;
+  onChangeText: (text: string) => void;
+}
+
+const SearchFilter: FC<SearchFilterProps> = ({
+  icon,
+  placeholder,
+  onChangeText,
+}) => {
   return (
     <View
       style={{

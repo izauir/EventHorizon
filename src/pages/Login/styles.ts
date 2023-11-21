@@ -48,7 +48,15 @@ export default StyleSheet.create({
     marginTop: 10,
     alignSelf: "center",
   },
-  buttonRegisterText: {
+  naoPossuiContaText: {
     color: "#A1A1A1",
+    fontSize: 16,
+    alignSelf: "center",
+  },
+  buttonRegisterText: {
+    color: "#4F46E5",
+    fontSize: 18,
+    fontWeight: "400",
+    alignSelf: "center",
   },
 });

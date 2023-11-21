@@ -1,5 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Text, View, ImageBackground, ScrollView, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 
@@ -51,21 +53,33 @@ export default function MyProfile() {
 
           <View style={{ marginTop: 32 }}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <Animatable.View animation="fadeInUp" delay={350} style={styles.mediaImageContainer}>
+              <Animatable.View
+                animation="fadeInUp"
+                delay={350}
+                style={styles.mediaImageContainer}
+              >
                 <Image
                   source={require("../../assets/media1.jpg")}
                   style={styles.image}
                   resizeMode="cover"
                 />
               </Animatable.View>
-              <Animatable.View animation="fadeInUp" delay={450} style={styles.mediaImageContainer}>
+              <Animatable.View
+                animation="fadeInUp"
+                delay={450}
+                style={styles.mediaImageContainer}
+              >
                 <Image
                   source={require("../../assets/media2.jpg")}
                   style={styles.image}
                   resizeMode="cover"
                 />
               </Animatable.View>
-              <Animatable.View animation="fadeInUp" delay={550} style={styles.mediaImageContainer}>
+              <Animatable.View
+                animation="fadeInUp"
+                delay={550}
+                style={styles.mediaImageContainer}
+              >
                 <Image
                   source={require("../../assets/media3.jpg")}
                   style={styles.image}
@@ -73,32 +87,6 @@ export default function MyProfile() {
                 />
               </Animatable.View>
             </ScrollView>
-            <Animatable.View
-              animation="fadeInLeft"
-              delay={1000}
-              style={styles.mediaCount}
-            >
-              <Text
-                style={[
-                  styles.text,
-                  { fontSize: 15, color: "#DFD8C8", fontWeight: "300" },
-                ]}
-              >
-                Melhores
-              </Text>
-              <Text
-                style={[
-                  styles.text,
-                  {
-                    fontSize: 12,
-                    color: "#DFD8C8",
-                    textTransform: "uppercase",
-                  },
-                ]}
-              >
-                Eventos
-              </Text>
-            </Animatable.View>
           </View>
         </ScrollView>
       </View>

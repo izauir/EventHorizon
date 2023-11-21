@@ -11,11 +11,11 @@ import {
 import * as Animatable from "react-native-animatable";
 
 import styles from "./styles";
-import SearchFilter from "../../components/SearchFilter";
 import { StackNavigation } from "../../routes/stack.routes";
 import welcomeStyles from "../Welcome/styles";
 
-interface EventData {
+export interface EventData {
+  link: string;
   id: number;
   title: string;
   description: string;
@@ -26,8 +26,8 @@ interface EventData {
 
 export default function Home() {
   const [data, setData] = useState<EventData[]>([]);
-  // O "a" é apenas para não deixar a váriavel vazia e quebrar o código.
-  const [searchTerm, setSearchTerm] = useState<string>("a");
+  // O "a" é apenas para não deixar a váriavel vazia e não quebrar o código.
+  const [searchTerm] = useState<string>("a");
   const navigation = useNavigation<StackNavigation>();
 
   useEffect(() => {
@@ -47,15 +47,9 @@ export default function Home() {
     fetchData();
   }, [searchTerm]);
 
-  const handleSearch = (text: string) => {
-    // Defina um valor padrão se o texto estiver vazio
-    const term = text.trim() === "" ? "a" : text;
-    setSearchTerm(term);
-  };
-
-  const handleContainerPress = () => {
-    // Navegar para a próxima tela ao clicar no container
-    navigation.navigate("card");
+  const handleContainerPress = (eventData: EventData) => {
+    // Navegar para a próxima tela enviando os dados do evento como parâmetros
+    navigation.navigate("card", { eventData });
   };
 
   return (
@@ -70,17 +64,15 @@ export default function Home() {
         </Text>
       </Animatable.View>
 
-      {/* Barra de busca */}
-      <Animatable.View animation="fadeInUp" delay={350}>
-        <SearchFilter
-          icon="search"
-          onChangeText={handleSearch}
-          placeholder=" Nome do evento ou artista"
-        />
+      <Animatable.View animation="fadeInLeft" delay={400}>
+        <Text style={[styles.text, { fontWeight: "300", fontSize: 18 }]}>
+          Hoje é {new Date().toLocaleDateString()}, já sabe qual é seu próximo
+          evento?
+        </Text>
       </Animatable.View>
 
       {/* Exibição dos dados da API */}
-      <Animatable.View animation="fadeInUp" delay={350}>
+      <Animatable.View animation="fadeInUp" delay={450}>
         <Text style={[styles.text, { fontWeight: "400", fontSize: 20 }]}>
           Últimas atualizações:
         </Text>
@@ -88,18 +80,19 @@ export default function Home() {
         <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
           {/* Renderize os dados conforme necessário */}
           {data.map((item) => (
-            <TouchableOpacity
-              onPress={handleContainerPress}
-              style={styles.informacoesApi}
-              key={item.id}
-            >
-              {/* Renderizar a imagem */}
-              <Image source={{ uri: item.photo }} style={[styles.imageApi]} />
-              {/* Informações em texto da Api */}
-              <Text style={[styles.textApi]}> {item.title}</Text>
-              <Text style={[styles.textApi]}>Data: {item.datetime}</Text>
-              {/* Adicione mais informações conforme sua API fornece */}
-            </TouchableOpacity>
+            <Animatable.View animation="fadeInLeft" delay={500} key={item.id}>
+              <TouchableOpacity
+                onPress={() => handleContainerPress(item)}
+                style={styles.informacoesApi}
+              >
+                {/* Renderizar a imagem */}
+                <Image source={{ uri: item.photo }} style={[styles.imageApi]} />
+                {/* Informações em texto da Api */}
+                <Text style={[styles.textApi]}> {item.title}</Text>
+                <Text style={[styles.textApi]}>Data: {item.datetime}</Text>
+                {/* Adicione mais informações conforme sua API fornece */}
+              </TouchableOpacity>
+            </Animatable.View>
           ))}
         </ScrollView>
       </Animatable.View>

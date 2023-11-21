@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import TabRoutes from "./tab.routes";
 import Card from "../pages/Card";
+import { EventData } from "../pages/Home"; // Importe o tipo EventData
 import Login from "../pages/Login";
 import SignIn from "../pages/SignIn";
 import Welcome from "../pages/Welcome";
@@ -15,7 +16,16 @@ export type ScreenNames = [
   "tabrouteshome",
   "card",
 ];
-export type RootStackParamList = Record<ScreenNames[number], undefined>;
+
+// Adicione a tipagem para os parâmetros da tela "card"
+export type RootStackParamList = {
+  welcome: undefined;
+  login: undefined;
+  signin: undefined;
+  tabrouteshome: undefined;
+  card: { eventData: EventData }; // Aqui está a tipagem para os parâmetros da tela "card"
+};
+
 export type StackNavigation = NavigationProp<RootStackParamList>;
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
