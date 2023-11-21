@@ -59,4 +59,9 @@ export default StyleSheet.create({
     fontWeight: "400",
     alignSelf: "center",
   },
+  eyeIconContainer: {
+    position: "absolute",
+    marginLeft: 290,
+    marginTop: -30,
+  },
 });
