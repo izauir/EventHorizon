@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import * as Network from "expo-network";
@@ -31,6 +32,7 @@ export default function Home() {
   // O "a" é apenas para não deixar a váriavel vazia e não quebrar o código.
   const [searchTerm] = useState<string>("a");
   const navigation = useNavigation<StackNavigation>();
+  const [username, setUsername] = useState<string>("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -48,6 +50,14 @@ export default function Home() {
           );
           setData(response.data);
           console.log(response.data); // Adicione este console.log para verificar os dados recebidos
+
+          // Colocar o username na entrada do "Olá {nome do usuário}!"
+          const storedUsername = await AsyncStorage.getItem("username");
+          if (storedUsername) {
+            const formattedUsername =
+              storedUsername.charAt(0).toUpperCase() + storedUsername.slice(1);
+            setUsername(formattedUsername);
+          }
         } catch (error) {
           console.error("Erro ao buscar dados:", error);
           // Lide com o erro, talvez exibindo uma mensagem para o usuário
@@ -75,7 +85,7 @@ export default function Home() {
       {/* Header, mensagem de bem-vindo */}
       <Animatable.View animation="fadeInLeft" delay={350}>
         <Text style={[styles.text, { fontWeight: "300", fontSize: 22 }]}>
-          Olá, Izauir!
+          Olá, {username}!
         </Text>
       </Animatable.View>
 
