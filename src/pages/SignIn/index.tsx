@@ -29,6 +29,7 @@ export default function SignIn() {
   const [errorUsuario, setErrorUsuario] = useState("");
   const [errorSenha, setErrorSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Novo estado
 
   const validarEmail = () => {
     // Lógica de validação do e-mail
@@ -58,6 +59,9 @@ export default function SignIn() {
   };
 
   const handleCadastro = async () => {
+    setIsButtonDisabled(true); // Desativa o botão
+    setTimeout(() => setIsButtonDisabled(false), 2000); // Reativa o botão "Cadastrar" após 2 segundos
+
     // Realize as validações antes de navegar para a próxima tela
     validarEmail();
     validarUsuario();
@@ -181,11 +185,15 @@ export default function SignIn() {
           </TouchableOpacity>
           {errorSenha && <Text style={styles.errorMessage}>{errorSenha}</Text>}
         </Animatable.View>
-
+        {/* Botão para cadastrar */}
         <Animatable.View animation="fadeInUp">
           <TouchableOpacity
             onPress={handleCadastro}
-            style={styles.buttonCadastrar}
+            style={[
+              styles.buttonCadastrar,
+              isButtonDisabled ? { opacity: 0.5 } : { opacity: 1 },
+            ]}
+            disabled={isButtonDisabled}
           >
             <Text style={styles.buttonCadastroText}>Cadastrar</Text>
           </TouchableOpacity>

@@ -20,8 +20,12 @@ export default function Login() {
   const navigation = useNavigation<StackNavigation>();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Novo estado
 
   const handleLogin = async () => {
+    setIsButtonDisabled(true); // Desativa o botão
+    setTimeout(() => setIsButtonDisabled(false), 2000); // Reativa o botão "Entrar" após 2 segundos
+
     if (!username || !password) {
       Alert.alert("Nome de usuário e senha são obrigatórios!");
       return;
@@ -95,7 +99,14 @@ export default function Login() {
 
         {/* Botão para entrar */}
         <Animatable.View animation="fadeInUp">
-          <TouchableOpacity onPress={handleLogin} style={styles.buttonLogin}>
+          <TouchableOpacity
+            onPress={handleLogin}
+            style={[
+              styles.buttonLogin,
+              isButtonDisabled ? { opacity: 0.5 } : { opacity: 1 },
+            ]}
+            disabled={isButtonDisabled}
+          >
             <Text style={styles.buttonLoginText}>Entrar</Text>
           </TouchableOpacity>
         </Animatable.View>

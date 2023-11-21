@@ -17,8 +17,8 @@ export default StyleSheet.create({
   },
   // Estilo de login e senha
   containerForm: {
-    paddingStart: "5%",
-    paddingEnd: "6%",
+    marginLeft: 20,
+    marginRight: 20,
   },
   messageLoginSenha: {
     fontSize: 18,
