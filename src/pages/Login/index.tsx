@@ -60,7 +60,7 @@ export default function Login() {
         Alert.alert("Usuário autenticado com sucesso!");
         navigation.navigate("tabrouteshome");
       } else {
-        Alert.alert("Credencias inválidas!");
+        Alert.alert("Credencias inválidas!", "Para recuperação entrar em contato:atendimento@horizonevents.com");
       }
     } catch (error) {
       console.error("Erro ao conectar com a API:", error);
