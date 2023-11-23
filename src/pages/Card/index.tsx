@@ -29,7 +29,7 @@ type CardRouteParams = {
 };
 
 function removeTags(str: string) {
-  if (str === null || str === "") return false;
+  if (str === null || str === undefined || str === "") return false;
   else str = str.toString();
   // Expressão regular para identificar tags HTML na
   // string de entrada. Substituindo a tag HTML identificada
@@ -124,6 +124,7 @@ export default function Card() {
           </Pressable>
 
           {/* Altere esta linha para alternar entre coração preenchido e vazio */}
+          <Animatable.View animation="pulse" iterationCount={5}>
           <Pressable onPress={handleFavorite}>
             <FontAwesome
               name={isFavorited ? "heart" : "heart-o"}
@@ -131,9 +132,10 @@ export default function Card() {
               color="black"
             />
           </Pressable>
+          </Animatable.View>
         </SafeAreaView>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <View
+          <Animatable.View animation="fadeInUp"
             style={{
               marginLeft: 15,
               marginTop: 15,
@@ -166,7 +168,7 @@ export default function Card() {
               {eventData.title}
             </Text>
 
-            <View style={{ flex: 0.5 }}>
+            <Animatable.View animation="fadeInUp" style={{ flex: 0.5 }}>
               {/* Descrição do Card */}
               <Text style={[styles.textApi]}>Data: {eventData.datetime}</Text>
               <Text style={styles.textApi}>{description}</Text>
@@ -185,8 +187,8 @@ export default function Card() {
                   <Text style={styles.buttonText}>Comprar ingresso</Text>
                 </TouchableOpacity>
               </Animatable.View>
-            </View>
-          </View>
+            </Animatable.View>
+          </Animatable.View>
         </ScrollView>
       </View>
     </ImageBackground>
