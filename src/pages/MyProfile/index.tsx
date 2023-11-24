@@ -17,6 +17,7 @@ import * as Animatable from "react-native-animatable";
 import styles from "./styles";
 import { StackNavigation } from "../../routes/stack.routes";
 import welcomeStyles from "../Welcome/styles";
+import { capitalize } from "../../components/capitalize";
 
 type Event = {
   id: number;
@@ -28,6 +29,7 @@ type Event = {
 export default function MyProfile() {
   const navigation = useNavigation<StackNavigation>();
   const [favoriteEvents, setFavoriteEvents] = useState<Event[]>([]);
+  const [formattedUsername, setFormattedUsername] = useState<string>("");
 
   useFocusEffect(
     React.useCallback(() => {
@@ -35,6 +37,10 @@ export default function MyProfile() {
         try {
           const storedUsername = await AsyncStorage.getItem("username");
           if (storedUsername !== null) {
+
+            const username = capitalize(storedUsername);
+            setFormattedUsername(username);
+
             const response = await axios.get(
               `https://pjpw.vercel.app/favorites/${storedUsername}`,
             );
@@ -137,7 +143,7 @@ export default function MyProfile() {
             style={styles.infoContainer}
           >
             <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-              Izauir
+              {formattedUsername}
             </Text>
             <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
               Seus favoritos
