@@ -12,7 +12,7 @@ Desenvolvimento do aplicato utilizando React Native com Expo, linguaguem utiliza
 Confira o projeto:
 
 - [Horizon Web](https://github.com/lipiw/horizon-final): Projeto Horizon Event versão web.
-- [Horizon Mobile](https://github.com/izauir/EventHorizon): Projeto Horizon Event versão mobile.
+- [Robot Framework](https://github.com/GabrielMichelan/HorizonEvent): Projeto Horizon, robot para coletar as informações do site e passar para API.
 
 ---
 
