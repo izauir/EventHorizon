@@ -125,17 +125,18 @@ export default function Card() {
 
           {/* Altere esta linha para alternar entre coração preenchido e vazio */}
           <Animatable.View animation="pulse" iterationCount={5}>
-          <Pressable onPress={handleFavorite}>
-            <FontAwesome
-              name={isFavorited ? "heart" : "heart-o"}
-              size={28}
-              color="black"
-            />
-          </Pressable>
+            <Pressable onPress={handleFavorite}>
+              <FontAwesome
+                name={isFavorited ? "heart" : "heart-o"}
+                size={28}
+                color="black"
+              />
+            </Pressable>
           </Animatable.View>
         </SafeAreaView>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Animatable.View animation="fadeInUp"
+          <Animatable.View
+            animation="fadeInUp"
             style={{
               marginLeft: 15,
               marginTop: 15,

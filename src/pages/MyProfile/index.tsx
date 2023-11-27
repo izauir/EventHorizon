@@ -15,9 +15,9 @@ import {
 import * as Animatable from "react-native-animatable";
 
 import styles from "./styles";
+import { capitalize } from "../../components/capitalize";
 import { StackNavigation } from "../../routes/stack.routes";
 import welcomeStyles from "../Welcome/styles";
-import { capitalize } from "../../components/capitalize";
 
 type Event = {
   id: number;
@@ -37,7 +37,6 @@ export default function MyProfile() {
         try {
           const storedUsername = await AsyncStorage.getItem("username");
           if (storedUsername !== null) {
-
             const username = capitalize(storedUsername);
             setFormattedUsername(username);
 
